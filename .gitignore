@@ -1,0 +1,5 @@
+.vscode
+node_modules
+service_account.js
+firebase-debug.log
+ui-debug.log
