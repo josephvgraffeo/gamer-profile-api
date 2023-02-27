@@ -2,6 +2,7 @@ import functions from "firebase-functions";
 import express from "express";
 import cors from "cors";
 import { getAllGames, addGame } from "./src/games.js";
+import { getGamerCard } from "./src/gamerCard.js";
 
 const app = express();
 app.use(cors());
@@ -11,7 +12,7 @@ app.get('/games', getAllGames);
 app.post('/games', addGame);
 
 // To Interact with the Gamer Card
-
+app.get('/gamerCard', getGamerCard);
 
 // To Interact with the Gamer Library
 
