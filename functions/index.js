@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import { getAllGames, addGame } from "./src/games.js";
 import { getGamerCard, patchGamerCard } from "./src/gamerCard.js";
+import { getGamerLibrary, postToGamerLibrary } from "./src/gamerLibrary.js";
 
 const app = express();
 app.use(cors());
@@ -16,6 +17,7 @@ app.get('/gamerCard', getGamerCard);
 app.patch('/gamerCard/:username', patchGamerCard);
 
 // To Interact with the Gamer Library
-
+app.get('/gamerLibrary/:status', getGamerLibrary);
+app.post('/gamerLibrary/:status', postToGamerLibrary);
 
 export const api = functions.https.onRequest(app);
