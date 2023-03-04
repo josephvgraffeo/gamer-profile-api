@@ -42,10 +42,7 @@ export async function getGamerLibrary(req, res) {
     collection.aggregate(getGameFromGames).toArray().then((result) => {
         res.json(result);
     })
-        .catch((err) => {
-            console.error(err);
-            res.status(500).send("Could not get importedGame from games");
-        })
+    .catch(err => res.status(500).send({ message: err.message }));
 }
 
 // post a game from a dropdown to the library status collection you want
@@ -54,4 +51,9 @@ export async function postToGamerLibrary(req, res) {
     const { _id } = req.params;
     const db = dbConnect();
     const collection = db.collection("userLibrary")
+
+    await db.collection("userLibrary")
+        .post({ _id: [_id] })
+        .then(() => getGamerLibrary(req, res))
+        .catch(err => res.status(500).send({ message: err.message }));
 }
