@@ -46,14 +46,14 @@ export async function getGamerLibrary(req, res) {
 }
 
 // post a game from a dropdown to the library status collection you want
-export async function postToGamerLibrary(req, res) {
+export async function updateGamerLibrary(req, res) {
     const { status } = req.params;
-    const { _id } = req.params;
+    const { gameId } = req.body;
     const db = dbConnect();
     const collection = db.collection("userLibrary")
 
     await db.collection("userLibrary")
-        .post({ _id: [_id] })
+        .updateOne({ _id: [_id] })
         .then(() => getGamerLibrary(req, res))
         .catch(err => res.status(500).send({ message: err.message }));
 }
