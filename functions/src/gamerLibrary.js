@@ -57,3 +57,26 @@ export async function updateGamerLibrary(req, res) {
         .then(() => getGamerLibrary(req, res))
         .catch(err => res.status(500).send({ message: err.message }));
 }
+
+// add additional information from user library to database
+export async function addAdditionalEntryInfo(req, res) {
+    console.log("addAdditionalEntryInfo function called");
+    const { gameId, rating, hours, platform, comments } = req.body;
+    const db = dbConnect();
+    console.log(req.body);
+
+    await db.collection("userLibraryEntryInfo")
+        .insertOne({ gameId: gameId, rating: rating, hours: hours, platform: platform, comments: comments })
+        .then(() => getGamerLibrary(req, res))
+        .catch(err => res.status(500).send({ message: err.message }));
+}
+
+// get extra info about user entry in library
+export async function getAdditionalEntryInfo(req, res) {
+    console.log("hello")
+    const { gameId } = req.body;
+    const db = dbConnect();
+    const collection = await db.collection("userLibraryEntryInfo").find({}).limit(1).toArray();
+    
+    res.send(collection);
+}
