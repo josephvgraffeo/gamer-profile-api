@@ -74,9 +74,9 @@ export async function addAdditionalEntryInfo(req, res) {
 // get extra info about user entry in library
 export async function getAdditionalEntryInfo(req, res) {
     console.log("hello")
-    const { gameId } = req.body;
+    const { gameId } = req.params;
     const db = dbConnect();
-    const collection = await db.collection("userLibraryEntryInfo").find({}).limit(1).toArray();
+    const collection = await db.collection("userLibraryEntryInfo").findOne({ gameId: gameId });
     
     res.send(collection);
 }
