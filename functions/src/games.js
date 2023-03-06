@@ -4,7 +4,7 @@ import { dbConnect } from "./dbConnect.js";
 // GET: All games from the games collection
 export async function getAllGames(req, res) {
     const db = dbConnect();
-    const collection = await db.collection("games").find({}).limit(10).toArray();
+    const collection = await db.collection("games").find({}).limit(20).toArray();
     
     console.table(collection);
     res.send(collection);
