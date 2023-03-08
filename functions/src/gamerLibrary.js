@@ -19,11 +19,11 @@ export async function getGamerLibrary(req, res) {
                 from: "games",
                 localField: "gameId",
                 foreignField: "_id",
-                as: "importedGame"
+                as: "foundGame"
             }
         },
         {
-            $unwind: "$importedGame"
+            $unwind: "$foundGame"
         },
         {
             $group: {
@@ -31,8 +31,8 @@ export async function getGamerLibrary(req, res) {
                 status: { $first: "$status" },
                 games: {
                     $push: {
-                        title: "$importedGame.title",
-                        cover_image: "$importedGame.cover_image"
+                        title: "$foundGame.title",
+                        cover_image: "$foundGame.cover_image"
                     }
                 }
             }
