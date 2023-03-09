@@ -60,10 +60,8 @@ export async function updateGamerLibrary(req, res) {
 
 // add additional information from user library to database
 export async function addAdditionalEntryInfo(req, res) {
-    console.log("addAdditionalEntryInfo function called");
     const { gameId, rating, hours, platform, comments } = req.body;
     const db = dbConnect();
-    console.log(req.body);
 
     await db.collection("userLibraryEntryInfo")
         .insertOne({ gameId: gameId, rating: rating, hours: hours, platform: platform, comments: comments })
@@ -73,10 +71,22 @@ export async function addAdditionalEntryInfo(req, res) {
 
 // get extra info about user entry in library
 export async function getAdditionalEntryInfo(req, res) {
-    console.log("hello")
     const { gameId } = req.params;
     const db = dbConnect();
     const collection = await db.collection("userLibraryEntryInfo").findOne({ gameId: gameId });
     
     res.send(collection);
+}
+
+// delete game from library
+export async function removeLibraryEntry(req, res) {
+    const { status, gameId } = req.params;
+    const db = dbConnect();
+    const collection = db.collection("userLibrary")
+
+    collection.updateOne(
+        { status: status },
+        { $pull: { gameId: new ObjectId(gameId) } })
+            .then(result => res.status(200).send("Game removed successfully"))
+            .catch(err => console.error(err))
 }
