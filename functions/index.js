@@ -19,8 +19,8 @@ app.patch('/gamerCard/:username', patchGamerCard);
 // To Interact with the Gamer Library
 app.get('/gamerLibrary/:status', getGamerLibrary);
 app.post('/gamerLibrary/:status', updateGamerLibrary);
+app.patch('/gamerLibrary/:status/:gameId', removeLibraryEntry);
 app.get('/entryInfo/:gameId', getAdditionalEntryInfo);
 app.post('/entryInfo', addAdditionalEntryInfo);
-app.patch('/gamerLibrary/:status/:gameId', removeLibraryEntry);
 
 export const api = functions.https.onRequest(app);

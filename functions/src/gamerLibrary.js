@@ -87,6 +87,6 @@ export async function removeLibraryEntry(req, res) {
     collection.updateOne(
         { status: status },
         { $pull: { gameId: new ObjectId(gameId) } })
-            .then(result => res.status(200).send("Game removed successfully"))
+            .then(result => res.send({ message: "game removed" }))
             .catch(err => console.error(err))
 }
