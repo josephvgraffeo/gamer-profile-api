@@ -32,7 +32,8 @@ export async function getGamerLibrary(req, res) {
                 games: {
                     $push: {
                         title: "$foundGame.title",
-                        cover_image: "$foundGame.cover_image"
+                        cover_image: "$foundGame.cover_image",
+                        _id: "$foundGame._id"
                     }
                 }
             }
@@ -87,6 +88,6 @@ export async function removeLibraryEntry(req, res) {
     collection.updateOne(
         { status: status },
         { $pull: { gameId: new ObjectId(gameId) } })
-            .then(result => res.send({ message: "game removed" }))
+            .then(result => res.send({ message: `game with id: ${gameId} in status: ${status} removed` }))
             .catch(err => console.error(err))
 }
